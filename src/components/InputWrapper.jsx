@@ -43,7 +43,7 @@ const useSearchData = () => {
     if (!searchData.data?.results && active) {
       const timeout = setTimeout(() => {
         setError("No Data Found")
-      }, 500);
+      }, 700);
       return () => clearTimeout(timeout);
     }
   }, [searchData, active]);
