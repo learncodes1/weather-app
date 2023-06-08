@@ -1,19 +1,22 @@
-import { Box,  Flex, Heading, Image, Input, InputGroup, InputRightElement, ListItem, Skeleton, Stack, Text, UnorderedList } from '@chakra-ui/react'
+import { Box,  Flex, Heading, Image, Input, InputGroup, InputRightElement, ListItem, Skeleton, Spacer, Stack, Text, UnorderedList } from '@chakra-ui/react'
 import React, {  useState } from 'react'
 import { weatherSearchApi } from '../utils/api'
 import debounce from '../utils/debounce';
+import WeatherCard from "./weatherCard";
 
 const InputWrapper = () => {
     const [searchData, setSearchData] = useState([])
     const [active, setActive] = useState(false)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
+    const [value,setValue]=useState('')
 
     const debouncedFetchData = debounce(fetchData, 300);
 
     const handleFetchData = async (e) => {
         setActive(true)
-        
+                setValue(e.target.value)
+
         if (e.target.value !== '') {
             debouncedFetchData(e.target.value)
         } else {
@@ -34,12 +37,14 @@ const InputWrapper = () => {
     }
     console.log(searchData.data?.results)
 
-    const handleClick = (e, lat, lng) => {
+    const handleClick = (e, lat, lng,name) => {
         console.log(lat, lng)
+        setValue(name)
         setActive(false)
     }
 
     return (
+        <>
         <Flex justifyContent="center">
             <Box p='4'>
                 <InputGroup width={400} position="relative">
@@ -47,7 +52,8 @@ const InputWrapper = () => {
                         pr='4.5rem'
                         type="text"
                         placeholder='Enter Location'
-                        onChange={(e) => handleFetchData(e)}
+                         onChange={(e) => handleFetchData(e)}
+                         value={value}
                     />
                     <UnorderedList
                         className="searchlist"
@@ -67,7 +73,7 @@ const InputWrapper = () => {
                             searchData.data?.results !== undefined ? (
                                 searchData.data?.results.map((item, i) => {
                                     return (
-                                        <ListItem py="7px" px="25px" onClick={(e, i) => handleClick(e, item.latitude, item.longitude)}>
+                                        <ListItem py="7px" px="25px" onClick={(e, i) => handleClick(e, item.latitude, item.longitude,item.name)}>
                                             <div className='listdata'>
                                                 <Image mr='3px' src={`https://flagcdn.com/32x24/${item.country_code.toLowerCase()}.png`} fallbackSrc='https://via.placeholder.com/16x12' />
                                                 <Heading as='h2' size='sm' noOfLines={1}>{item.name}</Heading>,
@@ -88,6 +94,16 @@ const InputWrapper = () => {
                 </InputGroup>
             </Box>
         </Flex>
+
+          <Flex p="15px" columnGap={15}>
+          <WeatherCard />
+          <Spacer />
+          <Flex>
+            <WeatherCard />
+          </Flex>
+        </Flex>
+        
+        </>
     )
 }
 
