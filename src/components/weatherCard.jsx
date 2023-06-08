@@ -5,7 +5,8 @@ const WeatherCard = () => {
  
 
             <div class="weather-wrapper">
-                <div class="weather-card madrid">
+                hello
+                {/* <div class="weather-card madrid">
                     <div class="weather-icon sun"></div>
                     <h1>26º</h1>
                     <p>Madrid</p>
@@ -14,7 +15,7 @@ const WeatherCard = () => {
                     <div class="weather-icon cloud"></div>
                     <h1>14º</h1>
                     <p>London</p>
-                </div>
+                </div> */}
             </div> 
      )
 }

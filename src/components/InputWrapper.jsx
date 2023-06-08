@@ -1,5 +1,5 @@
-import { Box, Button, Flex, Heading, Image, Input, InputGroup, InputRightElement, ListItem, Skeleton, Stack, Text, UnorderedList } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
+import { Box,  Flex, Heading, Image, Input, InputGroup, InputRightElement, ListItem, Skeleton, Stack, Text, UnorderedList } from '@chakra-ui/react'
+import React, {  useState } from 'react'
 import { weatherSearchApi } from '../utils/api'
 import debounce from '../utils/debounce';
 
