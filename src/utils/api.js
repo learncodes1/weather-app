@@ -5,7 +5,7 @@ export const weatherSearchApi = async (keyword) => {
     return data
 }
 
-export const CoordinateApi = async (long,lati) => {
-    const data = await axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${long}&longitude=${lati}&hourly=temperature_2m,relativehumidity_2m,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min&current_weather=true&timezone=GMT`)
+export const CoordinateApi = async (lati,lng) => {
+    const data = await axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${lati}&longitude=${lng}&hourly=temperature_2m,relativehumidity_2m,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min&current_weather=true&timezone=GMT`)
     return data
 }

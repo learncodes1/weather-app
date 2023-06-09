@@ -1,5 +1,5 @@
 import { Box, Flex, Heading, Image, Input, InputGroup, ListItem, Skeleton, Stack, Text, UnorderedList } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { weatherSearchApi } from '../utils/api'
 import debounce from '../utils/debounce';
 import WeatherCard from "./weatherCard";
@@ -9,8 +9,8 @@ const useSearchData = () => {
   const [active, setActive] = useState(false)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
-  const [value, setValue] = useState({ lat: '', lng: '', name: '' })
- 
+  const [value, setValue] = useState({ lat: 47.29881, lng: -88.3965, name: 'Ahmedabad, Gujarat' })
+  const [sendValue, setSendValue] = useState(value)
   const debouncedFetchData = debounce(fetchData, 300);
 
   const handleFetchData = async (e) => {
@@ -37,7 +37,10 @@ const useSearchData = () => {
   const handleClick = (lat, lng, name) => {
     setValue({ ...value, lat, lng, name })
     setActive(false)
+    setSendValue({lat, lng, name})
   }
+
+
 
   useEffect(() => {
     if (!searchData.data?.results && active) {
@@ -48,10 +51,10 @@ const useSearchData = () => {
     }
   }, [searchData, active]);
 
-  return { searchData, active, loading, value, handleFetchData, handleClick ,error };
+  return { searchData, active, loading, value, handleFetchData, handleClick, error, sendValue };
 }
 
-const SearchList = ({ searchData, active, value, loading, handleClick,error }) => (
+const SearchList = ({ searchData, active, value, loading, handleClick, error }) => (
   <UnorderedList
     className="searchlist"
     position="absolute"
@@ -64,9 +67,9 @@ const SearchList = ({ searchData, active, value, loading, handleClick,error }) =
     margin={0}
     borderRadius={15}
     listStyleType="none"
-    display={active && value.name !== '' ? 'block' : 'none'}
+    display={active && value.name.length >1 ? 'block' : 'none'}
   >
-    {searchData.data?.results !== undefined ? searchData.data?.results?.map((item) => (
+    {(searchData.data?.results !== undefined && value.name.length >1 )? searchData.data?.results?.map((item) => (
       <ListItem key={item.id} py="7px" px="25px" onClick={() => handleClick(item.latitude, item.longitude, `${item.name}, ${item.admin1}`)}>
         <div className='listdata'>
           <Image mr='3px' src={`https://flagcdn.com/32x24/${item.country_code.toLowerCase()}.png`} fallbackSrc='https://via.placeholder.com/16x12' />
@@ -74,10 +77,10 @@ const SearchList = ({ searchData, active, value, loading, handleClick,error }) =
           <Text pl="3px" fontSize='sm' color={'#828282'} className='list_district'>{item.admin1}</Text>
         </div>
       </ListItem>
-    )):(<> <ListItem color={"blackAlpha.800"} textAlign={'center'}>{error}</ListItem></>)
-    
+    )) : (<> <ListItem color={"blackAlpha.800"} textAlign={'center'}>{error}</ListItem></>)
+
     }
-    {loading && value.name !== '' && (
+    {loading && value.name.length >1 && (
       <Stack px="25px">
         <Skeleton height='15px' />
         <Skeleton height='15px' />
@@ -88,7 +91,7 @@ const SearchList = ({ searchData, active, value, loading, handleClick,error }) =
 );
 
 const InputWrapper = () => {
-  const { searchData, active, loading, value, handleFetchData, handleClick, error } = useSearchData();
+  const { searchData, active, loading, value, handleFetchData, handleClick, error, sendValue } = useSearchData();
 
   return (
     <>
@@ -108,7 +111,7 @@ const InputWrapper = () => {
       </Flex>
 
       <Flex>
-        <WeatherCard />
+         <WeatherCard data={sendValue} />
       </Flex>
     </>
   )

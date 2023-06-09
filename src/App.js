@@ -7,6 +7,7 @@ import {
 } from '@chakra-ui/react';
 import InputWrapper from './components/InputWrapper';
 import "./assets/style.css"
+import './assets/card.css';
 import Header from './components/Header';
  function App() {
 
