@@ -197,21 +197,16 @@ const InputWrapper = () => {
           </Box>
 
           <Flex flexDirection={['column', 'column', 'column']} flex="1">
-            {/* Main Content */}
+
 
             <Box flex='1' backgroundColor={colorMode === 'dark' ? '#181818' : 'gray.100'}>
-              {/* Main Content 1 */}
+
 
               {coordinateData ? <WeatherCard data={coordinateData} /> : 'Loading'}
 
 
             </Box>
 
-
-            {/* <Box flex={['1', '1', '0.5']} backgroundColor="gray.200"> */}
-            {/* Main Content 2 */}
-            {/* two
-        </Box> */}
           </Flex>
         </>
       }
