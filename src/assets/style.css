@@ -1,7 +1,3 @@
-body {
-    background: linear-gradient(red.100 0%, orange.100 25%, yellow.100 50%)
-}
-
 .listdata {
     display: flex;
     align-items: center;

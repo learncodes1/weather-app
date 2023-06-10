@@ -4,7 +4,6 @@ import { ColorModeSwitcher } from '../ColorModeSwitcher'
 const Header = () => {
 
     const { colorMode, toggleColorMode } = useColorMode()
-    console.log(colorMode)
 
     return (
         <header style={{ position: "absolute", top: 0, left: 0, width: "100%", "--theme-color": colorMode === "dark" ? "#00000080" : "#ffffffcc" }}>
