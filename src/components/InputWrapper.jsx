@@ -96,7 +96,7 @@ const SearchList = ({ searchData, active, value, loading, handleClick, error, co
     display={active && value.name.length > 1 ? 'block' : 'none'}
   >
     {(searchData.data?.results !== undefined && value.name.length > 1) ? searchData.data?.results?.map((item) => (
-      <ListItem key={item.id} py="7px" px="25px" onClick={() => handleClick(item.latitude, item.longitude, `${item.name}, ${item.admin1}`)}>
+      <ListItem key={item.id} py="7px" px="25px" onClick={() => handleClick(item.latitude, item.longitude, `${item.name}, ${item.admin1 !== undefined ? ` ,${item.admin1}` : ''}`)}>
         <div className='listdata'>
           <Image mr='3px' src={`https://flagcdn.com/32x24/${item.country_code.toLowerCase()}.png`} fallbackSrc='https://via.placeholder.com/16x12' />
           <Heading as='h2' size='sm' noOfLines={1}>{item.name}</Heading>,
